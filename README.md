@@ -23,8 +23,9 @@ There are two methods of choosing attribute.  I should account for both of them.
   
 1. [ ] Quick build (profiles with pre-selected attributes)
 2. [ ] Custom build
-  1. [ ] User is given 40 attribute points to buy initial attributes.
-  2. [ ] Cost to raise attributes is based on table below:
+  
+  - [ ] User is given 40 attribute points to buy initial attributes.
+  - [ ] Cost to raise attributes is based on table below:
     
   | Attribute Level | Cost to Raise |
   | --- | --- |
