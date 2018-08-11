@@ -58,28 +58,29 @@ There are two methods of choosing attribute.  I should account for both of them.
   | Fortitude | Resist poison, shrug off pain, survive in a desert, wear heavy armor |
   | Might | Swing a maul, jump over a chasm, break down a door, wrestle a foe to submission |
 
-  | Mental |
-  | --- |
-  | Learning |
-  | Logic |
-  | Perception |
-  | Will |
+  | Mental | |
+  | --- | --- |
+  | Learning | Recall facts about history, arcane magic, the natural world, or any information you picked up from an external source |
+  | Logic | Innovate a new crafting method, decipher a code, jury-rig a device, get the gist of a language you don't speak |
+  | Perception | Sense ulterior motives, track someone, catch a gut feeling, spot a hidden foe, find a secret door |
+  | Will | Maintain your resolve, resist torture, study long hours, stay awake on watch, stave off insanity
   
-  |Social|
-  |---|
-  |Deception|
-  |Persuasion|
-  |Presense|
+  |Social| |
+  |---| ---|
+  | Deception | Tell a lie, bluff at cards, disguise yourself, spread rumors, swindle a sucker |
+  | Persuasion | Negotiate a deal, convince someone, haggle a good price, pry information |
+  | Presence | Give a speech, sing a song, inspire an army, exert your force of personality, have luck smile upon you |
 
   | Extraordinary |
   | --- |
-  | Alteration |
-  | Creation |
-  | Engergy |
-  | Entropy | 
-  | Influence |
-  | Prescience |
-  | Protection |
+  | Alteration | Change shape, alter molecular structures, transmute one material into another |
+  | Creation | Channel higher powers, manifest something from nothing, regenerate, divinely bolster |
+  | Energy | Create and control the elements—fire, cold, electricity |
+  | Entropy | Disintegrate matter, kill with a word, create undead, sicken others |
+  | Influence | Control the minds of others, speak telepathically, instill fear, create illusory figments, cloak with invisibility |
+  | Movement | Teleport, fly, hasten, telekinetically push |
+  | Prescience | See the future, read minds or auras, view from afar, detect magic or evil, communicate with extraplanar entities |
+  | Protection | Protect from damage, break supernatural influence, dispel magic, exile extradimensional beings |
 
 ### Step 3. Record Defenses, Hit Points, and Speed
 
