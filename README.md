@@ -52,7 +52,7 @@ There are two methods of choosing attribute.  I should account for both of them.
   
   3. [ ] User should be able to raise the following attributes:
 
-  | Physical | |
+  | Physical | --- |
   | --- | |
   | Agility | Dodge attacks, move with stealth, perform acrobatics, shoot a bow, pick a pocket |
   | Fortitude | Resist poison, shrug off pain, survive in a desert, wear heavy armor |
