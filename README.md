@@ -72,7 +72,7 @@ There are two methods of choosing attribute.  I should account for both of them.
   | Presence | Give a speech, sing a song, inspire an army, exert your force of personality, have luck smile upon you |
 
   | Extraordinary |
-  | --- |
+  | --- | --- |
   | Alteration | Change shape, alter molecular structures, transmute one material into another |
   | Creation | Channel higher powers, manifest something from nothing, regenerate, divinely bolster |
   | Energy | Create and control the elements—fire, cold, electricity |
