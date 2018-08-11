@@ -2,7 +2,21 @@
 
 So this is my design guide.
 
-## Step 1:  Describe your character.
+- [ ] Bare minimum:
+  - [ ] GUI
+    - [ ] New Character
+    - [ ] Load Character
+    - [ ] Character Sheet
+
+- [ ] Optional:
+  - [ ] Random NPC generator
+  - [ ] Feat creator
+  - [ ] Boon creator
+  - [ ] Bane creator
+
+## GUI
+
+### Step 1:  Describe your character.
 
 - [ ] Bare minimum:
   - [ ] User should be able to enter a name.
@@ -17,7 +31,7 @@ So this is my design guide.
   - [ ] Random physical/social trait buttons
   - [ ] Random secret generator
   
-## Step 2. Choose Attributes
+### Step 2. Choose Attributes
   
 There are two methods of choosing attribute.  I should account for both of them.  
   
@@ -67,7 +81,7 @@ There are two methods of choosing attribute.  I should account for both of them.
   | Prescience |
   | Protection |
 
-## Step 3. Record Defenses, Hit Points, and Speed
+### Step 3. Record Defenses, Hit Points, and Speed
 
 - [ ] The application should calculate the following for the user.
   - [ ] Toughness = 10 + Fortitude + Will
@@ -76,7 +90,7 @@ There are two methods of choosing attribute.  I should account for both of them.
   - [ ] Hit Points = 2 * (Fortitude + Presence + Will) + 10
 - [ ] The characters base speed should be set to 30 and made available or feat/abilities to alter later on.
 
-## Step 4: Purchase Feats
+### Step 4: Purchase Feats
 
 Minimum:
 - [ ] User should be given 6 feat points to spend.
@@ -86,18 +100,18 @@ Optional:
 - [ ] Search for feats
 - [ ] Create-a-feat
 
-## Step 5: Choose Start Equipment
+### Step 5: Choose Start Equipment
 
 - [ ] User should be able to set wealth level.
 - [ ] User should be able to pick 3 items of the same wealth level.
 - [ ] User should be able to pick any number of items of a wealth level lower than that.
 
-## Step 6:  Choose Perks and Flaws
+### Step 6:  Choose Perks and Flaws
 
 - [ ] User should optionally be able to select up to two perks.
 - [ ] User should optionally be able to select up to two flaws.
 
-## Levelling Up 
+### Levelling Up
 
 Notes:
 
