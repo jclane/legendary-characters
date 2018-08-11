@@ -54,9 +54,9 @@ There are two methods of choosing attribute.  I should account for both of them.
 
   | Physical |
   | --- |
-  | Agility |
-  | Fortitude |
-  | Might |
+  | Agility | Dodge attacks, move with stealth, perform acrobatics, shoot a bow, pick a pocket |
+  | Fortitude | Resist poison, shrug off pain, survive in a desert, wear heavy armor |
+  | Might | Swing a maul, jump over a chasm, break down a door, wrestle a foe to submission |
 
   | Mental |
   | --- |
