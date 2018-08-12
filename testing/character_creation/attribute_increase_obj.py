@@ -1,5 +1,6 @@
 pnt = 40
-COST_TO_INCREASE = {0:0, 1:1, 2:3, 3:6, 4:10, 5:15}
+COST_TO_INCREASE = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
+
 
 class CharacterSheet(object):
     def __init__(self, name, description, stats, banes, boons, feats):
@@ -13,11 +14,12 @@ class CharacterSheet(object):
     def increase_ability_score(self, category, ability, amount):
         global pnt
         pnt = pnt - COST_TO_INCREASE[amount]
-        self.stats[category].update({ability:amount})
+        self.stats[category].update({ability: amount})
+
 
 cindy = CharacterSheet(name='cindy', description='pretty lady',
                        stats={'physical': {'might': 0, 'agility': 0, 'fortitude': 0},
-      'mental':{'learning':0}}, banes='potatoes', boons='unicorn mastery',
+                              'mental': {'learning': 0}}, banes='potatoes', boons='unicorn mastery',
                        feats='unicorn potato attack')
 
 print(cindy.name, "is a", cindy.description + ".")
