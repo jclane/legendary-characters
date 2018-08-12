@@ -3,11 +3,10 @@
 So this is my design guide.
 
 - [ ] Bare minimum:
-  - [ ] GUI
-    - [ ] New Character
-    - [ ] Load Character
-    - [ ] Character Sheet
-
+  - [ ] New Character
+  - [ ] Load Character
+  - [ ] Character Sheet
+    
 - [ ] Optional:
   - [ ] Random NPC generator
   - [ ] Feat creator
