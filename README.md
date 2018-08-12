@@ -13,7 +13,7 @@ So this is my design guide.
   - [ ] Boon creator
   - [ ] Bane creator
 
-## GUI
+## New Character
 
 ### Step 1:  Describe your character.
 
