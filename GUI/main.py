@@ -24,8 +24,8 @@ class tkWindow:
         menu_file.add_command(label='Quit', command=root.destroy)
         
         root.config(menu=menubar)
-        
-        mainframe = ttk.Frame(root)
+
+        mainframe = ttk.Frame(root, padding="10 10 10 10")
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
                         
         fluffframe = ttk.Frame(mainframe)
@@ -62,18 +62,16 @@ class tkWindow:
         ttk.Entry(fluffframe, textvariable=physical_trait2).grid(row=3, column=2, columnspan=13, sticky=W + E)
         
         Label(fluffframe, text="Social Trait 1").grid(row=4, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait1).grid(row=4, column=2, columnspan=13, sticky=W + E)
+        ttk.Entry(fluffframe, textvariable=social_trait1).grid(row=4, column=2, columnspan=13, sticky=W + E)
         
         Label(fluffframe, text="Social Trait 2").grid(row=5, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait2).grid(row=5, column=2, columnspan=13, sticky=W + E)
+        ttk.Entry(fluffframe, textvariable=social_trait2).grid(row=5, column=2, columnspan=13, sticky=W + E)
         
         Label(fluffframe, text="Secret").grid(row=6, column=1, sticky=W)
         ttk.Entry(fluffframe, textvariable=secret).grid(row=6, column=2, columnspan=13, rowspan=3, sticky=W + E)
-                  
-        for child in mainframe.winfo_children():
-            child.grid_configure(padx=5, pady=5)
 
 
 root = Tk()
+root.title("Legendary Characters")
 tkWindow(root)
 root.mainloop()
