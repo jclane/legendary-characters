@@ -39,13 +39,19 @@ class tkWindow:
         mainframe = ttk.Frame(root, padding="10 10 10 10")
         mainframe.grid(row=0, column=0, sticky=(N, W, E, S))
 
-        abilitiesframe = ttk.Frame(mainframe, padding="5 5 5 5")
+        abilitiesframe = ttk.Frame(mainframe)
         abilitiesframe.grid(row=0, column=1, sticky=(N, W, E, S))
         
-        statframe = Frame(mainframe)
+        physicalframe = Frame(abilitiesframe, bg="red")
+        physicalframe.grid(row=0, column=0, sticky=(N, W, E, S))
+        
+        mentalframe = Frame(abilitiesframe, bg="blue")
+        mentalframe.grid(row=4, column=0, sticky=(N, W, E, S))
+        
+        statframe = ttk.Frame(mainframe)
         statframe.grid(row=0, column=2, padx=25, pady=15, sticky=(N+E))
 
-        fluffframe = Frame(mainframe, padding="5 5 5 5")
+        fluffframe = ttk.Frame(mainframe, padding="5 5 5 5")
         fluffframe.grid(row=0, column=3, sticky=(N, W, E, S))
         
         largefont = font.Font(size=22)
@@ -86,35 +92,32 @@ class tkWindow:
         # banes = StringVar()
         # boons = StringVar()
         # feats = StringVar()
-                
-        def add_spingboxes(group):
-            group = list()
-            for i in range(0,18):
-                abilities.append(Spinbox(abilitiesframe, from_=0, to=5))
-                abilities[i].var = IntVar()
+        
+        def add_spingboxes(group, frame):
+            abilities = list()
+            groups = {'Physical':('Agility', 'Fortitude', 'Might'), 'Mental':('Learning', 'Logic', 'Perception', 'Will')}
+            for i in range(0,len(groups[group])):
+                abilities.append(Spinbox(frame, from_=0, to=5))
+                abilities[i].var = groups[group][i] = IntVar()
                 abilities[i].var.trace_add('write', lambda *_, 
                                                 var=abilities[i].var:calculate_stats(var))
+                
                 abilities[i]['textvariable'] = abilities[i].var
                 abilities[i].grid(row=i+1, column=2)
-            
-        Label(abilitiesframe, text="Physical", font="bold").grid(row=0, column=0, sticky=W)
-        Label(abilitiesframe, text="Agility").grid(row=1, column=0, sticky=W)
-        #Spinbox(abilitiesframe, from_=0, to=5, textvariable=agilityval).grid(row=1, column=1)
-        Label(abilitiesframe, text="Fortitude").grid(row=2, column=0, sticky=W)
-        #Spinbox(abilitiesframe, from_=0, to=5, textvariable=fortitudeval).grid(row=2, column=1)
-        Label(abilitiesframe, text="Might").grid(row=3, column=0, sticky=W)
-        #Spinbox(abilitiesframe, from_=0, to=5, textvariable=mightval).grid(row=3, column=1)
-        
-        Label(abilitiesframe, text="Mental", font="bold").grid(row=4, column=0, sticky=W)
-        Label(abilitiesframe, text="Learning").grid(row=5, column=0, sticky=W)
-        #Spinbox(abilitiesframe, from_=0, to=5, textvariable=learningval).grid(row=5, column=1)
-        Label(abilitiesframe, text="Logic").grid(row=6, column=0, sticky=W)
-        #Spinbox(abilitiesframe, from_=0, to=5, textvariable=logicval).grid(row=6, column=1)
-        Label(abilitiesframe, text="Perception").grid(row=7, column=0, sticky=W)
-        #Spinbox(abilitiesframe, from_=0, to=5, textvariable=perceptionval).grid(row=7, column=1)
-        Label(abilitiesframe, text="Will").grid(row=8, column=0, sticky=W)
-        #Spinbox(abilitiesframe, from_=0, to=5, textvariable=willval).grid(row=8, column=1)
-        
+
+        Label(physicalframe, text="Physical", font="bold").grid(row=0, column=0, sticky=W)
+        Label(physicalframe, text="Agility").grid(row=1, column=0, sticky=W)
+        Label(physicalframe, text="Fortitude").grid(row=2, column=0, sticky=W)
+        Label(physicalframe, text="Might").grid(row=3, column=0, sticky=W)
+        add_spingboxes("Physical", physicalframe)
+
+        Label(mentalframe, text="Mental", font="bold").grid(row=0, column=0, sticky=W)
+        Label(mentalframe, text="Learning").grid(row=1, column=0, sticky=W)
+        Label(mentalframe, text="Logic").grid(row=2, column=0, sticky=W)
+        Label(mentalframe, text="Perception").grid(row=3, column=0, sticky=W)
+        Label(mentalframe, text="Will").grid(row=4, column=0, sticky=W)
+        add_spingboxes("Mental", mentalframe)
+        '''
         Label(abilitiesframe, text="Social", font="bold").grid(row=9, column=0, sticky=W)
         Label(abilitiesframe, text="Deception").grid(row=10, column=0, sticky=W)
         #Spinbox(abilitiesframe, from_=0, to=5, textvariable=deceptionval).grid(row=10, column=1)
@@ -140,7 +143,7 @@ class tkWindow:
         #Spinbox(abilitiesframe, from_=0, to=5, textvariable=prescienceval).grid(row=20, column=1)
         Label(abilitiesframe, text="Protection").grid(row=21, column=0, sticky=W)
         #Spinbox(abilitiesframe, from_=0, to=5, textvariable=protectionval).grid(row=21, column=1)     
-        
+        '''
         Label(statframe, text="Toughness", font="bold").grid(row=0, column=0, sticky=W+E)
         Label(statframe, textvariable=toughnessval, font=largefont).grid(row=1, column=0)
         Label(statframe, text="Guard", font="bold").grid(row=2, column=0, sticky=W+E)
