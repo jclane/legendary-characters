@@ -1,10 +1,15 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import font
 
+
+ability_points = 40 
+COSTS = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
 
 class tkWindow:
-
+       
     def __init__(self, root):
+                   
         def do_new():
             pass
 
@@ -14,6 +19,12 @@ class tkWindow:
         def do_print():
             pass
 
+        def calculate_stats(*args):
+            toughnessval.set(10 + stats['fortitudeval'].get() + stats['willval'].get())
+            guardval.set(10 + stats['agilityval'].get() + stats['willval'].get())
+            resolveval.set(10 + stats['presenceval'].get() + stats['willval'].get())
+            hpval.set(2 * (stats['fortitudeval'].get() + stats['presenceval'].get() + stats['willval'].get()) + 10)    
+                
         menubar = Menu(root)
         menu_file = Menu(menubar, tearoff=0)
         menubar.add_cascade(menu=menu_file, label='File')
@@ -25,14 +36,38 @@ class tkWindow:
         
         root.config(menu=menubar)
 
-        mainframe = ttk.Frame(root, padding="10 10 10 10")
+        mainframe = ttk.Frame(root)
         mainframe.grid(row=0, column=0, sticky=(N, W, E, S))
-                        
-        fluffframe = ttk.Frame(mainframe)
-        fluffframe.grid(row=0, column=1, sticky=(N, W, E, S))
 
+        abilitiesframe = ttk.Frame(mainframe, padding="5 5 5 5")
+        abilitiesframe.grid(row=0, column=1, sticky=W)
+        
+        physicalframe = ttk.Frame(abilitiesframe)
+        physicalframe.grid(row=0, column=0, sticky=W)
+        
+        mentalframe = ttk.Frame(abilitiesframe)
+        mentalframe.grid(row=4, column=0, sticky=W)
+        
+        socialframe = ttk.Frame(abilitiesframe)
+        socialframe.grid(row=9, column=0, sticky=W)
+        
+        extraordinaryframe = Frame(abilitiesframe)
+        extraordinaryframe.grid(row=13, column=0, sticky=W)
+ 
         statframe = ttk.Frame(mainframe)
-        statframe.grid(row=0, column=0, sticky=(N, W, E, S))
+        statframe.grid(row=0, column=2, padx=25, pady=15, sticky=(N+E))
+        
+        fluffframe = ttk.Frame(mainframe)
+        fluffframe.grid(row=0, column=3, sticky=(N, W, E, S))
+ 
+        largefont = font.Font(size=22)
+        
+        stats = {}
+
+        toughnessval = IntVar()
+        guardval = IntVar()
+        resolveval = IntVar()
+        hpval = IntVar()        
         
         name = StringVar()
         race = StringVar()
@@ -43,29 +78,65 @@ class tkWindow:
         social_trait2 = StringVar()
         secret = StringVar()
 
-        agilityval = IntVar()
-        fortitudeval = IntVar()
-        mightval = IntVar()
-        learningval = IntVar()
-        logicval = IntVar()
-        perceptionval = IntVar()
-        willval = IntVar()
-        deceptionval = IntVar()
-        persuasionval = IntVar()
-        presenceval = IntVar()
-        alterationval = IntVar()
-        creationval = IntVar()
-        energyval = IntVar()
-        entropyval = IntVar()
-        influenceval = IntVar()
-        movementval = IntVar()
-        prescienceval = IntVar()
-        protectionval = IntVar()
-
         # banes = StringVar()
         # boons = StringVar()
         # feats = StringVar()
+        
+        def add_spinboxes(group, frame):
+            abilities = list()
+            
+            groups = {'Physical':('Agility', 'Fortitude', 'Might'), 'Mental':('Learning', 'Logic', 'Perception', 'Will'), \
+                    'Social':('Deception', 'Persuasion', 'Presence'), 'Extraordinary':('Alteration', 'Creation', 'Energy', \
+                    'Entropy', 'Influence', 'Movement', 'Prescience', 'Protection')}
+            for i in range(0,len(groups[group])):
+                abilities.append(Spinbox(frame, from_=0, to=5, width=4))
+                abilities[i].var = IntVar()
+                abilities[i]['textvariable'] = abilities[i].var
+                stats[groups[group][i].lower() + 'val'] = abilities[i].var
+                if group != "Extraordinary":
+                    abilities[i].grid(row=i+1, column=1, padx=(35, 0))
+                else: 
+                    abilities[i].grid(row=i+1, column=1)
 
+        Label(physicalframe, text="Physical", font="bold").grid(row=0, column=0, sticky=W)
+        Label(physicalframe, text="Agility").grid(row=1, column=0, sticky=W)
+        Label(physicalframe, text="Fortitude").grid(row=2, column=0, sticky=W)
+        Label(physicalframe, text="Might").grid(row=3, column=0, sticky=W)
+        add_spinboxes("Physical", physicalframe)
+        
+        Label(mentalframe, text="Mental", font="bold").grid(row=0, column=0, sticky=W)
+        Label(mentalframe, text="Learning").grid(row=1, column=0, sticky=W)
+        Label(mentalframe, text="Logic").grid(row=2, column=0, sticky=W)
+        Label(mentalframe, text="Perception").grid(row=3, column=0, sticky=W)
+        Label(mentalframe, text="Will").grid(row=4, column=0, sticky=W)
+        add_spinboxes("Mental", mentalframe)
+        
+        Label(socialframe, text="Social", font="bold").grid(row=0, column=0, sticky=W)
+        Label(socialframe, text="Deception").grid(row=1, column=0, sticky=W)
+        Label(socialframe, text="Persuasion").grid(row=2, column=0, sticky=W)
+        Label(socialframe, text="Presence").grid(row=3, column=0, sticky=W)
+        add_spinboxes("Social", socialframe)
+        
+        Label(extraordinaryframe, text="Extraordinary", font="bold").grid(row=0, column=0, sticky=W)
+        Label(extraordinaryframe, text="Alteration").grid(row=1, column=0, sticky=W)
+        Label(extraordinaryframe, text="Creation").grid(row=2, column=0, sticky=W)
+        Label(extraordinaryframe, text="Energy").grid(row=3, column=0, sticky=W)
+        Label(extraordinaryframe, text="Entropy").grid(row=4, column=0, sticky=W)
+        Label(extraordinaryframe, text="Influence").grid(row=5, column=0, sticky=W)
+        Label(extraordinaryframe, text="Movement").grid(row=6, column=0, sticky=W)
+        Label(extraordinaryframe, text="Prescience").grid(row=7, column=0, sticky=W)
+        Label(extraordinaryframe, text="Protection").grid(row=8, column=0, sticky=W)
+        add_spinboxes("Extraordinary", extraordinaryframe)
+        
+        Label(statframe, text="Toughness", font="bold").grid(row=0, column=0, sticky=W+E)
+        Label(statframe, textvariable=toughnessval, font=largefont).grid(row=1, column=0)
+        Label(statframe, text="Guard", font="bold").grid(row=2, column=0, sticky=W+E)
+        Label(statframe, textvariable=guardval, font=largefont).grid(row=3, column=0)
+        Label(statframe, text="Resolve", font="bold").grid(row=4, column=0, sticky=W+E)
+        Label(statframe, textvariable=resolveval, font=largefont).grid(row=5, column=0)
+        Label(statframe, text="Hit Points", font="bold").grid(row=6, column=0, sticky=W+E)
+        Label(statframe, textvariable=hpval, font=largefont).grid(row=7, column=0)
+              
         Label(fluffframe, text="Name").grid(row=1, column=1, sticky=W)
         ttk.Entry(fluffframe, textvariable=name).grid(row=1, column=2, columnspan=2, sticky=W + E)
         
@@ -73,8 +144,8 @@ class tkWindow:
         ttk.Entry(fluffframe, textvariable=race).grid(row=1, column=7, columnspan=2, sticky=W + E)
 
         Label(fluffframe, text="Size").grid(row=1, column=10, sticky=W)
-        ttk.Combobox(fluffframe, textvariable=size, values=("Small", "Medium", "Large")) \
-            .grid(row=1, column=11, columnspan=2, sticky=W + E)
+        ttk.Combobox(fluffframe, textvariable=size, values=("Small", "Medium", "Large"), width=10) \
+            .grid(row=1, column=11, sticky=W + E)
         
         Label(fluffframe, text="Physical Trait 1").grid(row=2, column=1, sticky=W)
         ttk.Entry(fluffframe, textvariable=physical_trait1).grid(row=2, column=2, columnspan=13, sticky=W + E)
@@ -90,15 +161,12 @@ class tkWindow:
         
         Label(fluffframe, text="Secret").grid(row=6, column=1, sticky=W)
         ttk.Entry(fluffframe, textvariable=secret).grid(row=6, column=2, columnspan=13, rowspan=3, sticky=W + E)
-
-        Label(statframe, text="Physical", font="bold").grid(row=0, column=0, sticky=W)
-        Label(statframe, text="Agility").grid(row=1, column=0, sticky=W)
-        Spinbox(statframe, from_=0, to=5, textvariable=agilityval).grid(row=1, column=1)
-        Label(statframe, text="Mental", font="bold").grid(row=4, column=0, sticky=W)
-
-        Label(statframe, text="Social", font="bold").grid(row=9, column=0, sticky=W)
-
-        Label(statframe, text="Extraordinary", font="bold").grid(row=13, column=0, sticky=W)
+        
+        stats['agilityval'].trace('w', calculate_stats)
+        stats['fortitudeval'].trace('w', calculate_stats)
+        stats['willval'].trace('w', calculate_stats)
+        stats['presenceval'].trace('w', calculate_stats)   
+        
 
 root = Tk()
 root.title("Legendary Characters")
