@@ -26,7 +26,7 @@ class tkWindow:
         
         def calculate_stats(*args):
             toughnessval.set(10 + stats['fortitudeval'].get() + stats['willval'].get())
-            guardval.set(10 + stats['agilityval'].get() + stats['willval'].get())
+            evasionval.set(10 + stats['agilityval'].get() + stats['willval'].get())
             resolveval.set(10 + stats['presenceval'].get() + stats['willval'].get())
             hpval.set(2 * (stats['fortitudeval'].get() + stats['presenceval'].get() + stats['willval'].get()) + 10)    
                 
@@ -62,8 +62,11 @@ class tkWindow:
         statframe = ttk.Frame(mainframe)
         statframe.grid(row=0, column=2, padx=25, pady=15, sticky=(N+E))
         
-        fluffframe = ttk.Frame(mainframe)
+        fluffframe = Frame(mainframe, bg='green')
         fluffframe.grid(row=0, column=3, sticky=(N, W, E, S))
+        
+        featsframe = Frame(mainframe, bg='blue')
+        featsframe.grid(row=1, column=3, sticky=(N, W, E, S))
  
         largefont = font.Font(size=22)
         
@@ -72,7 +75,7 @@ class tkWindow:
         stats = {}
                        
         toughnessval = IntVar()
-        guardval = IntVar()
+        evasionval = IntVar()
         resolveval = IntVar()
         hpval = IntVar()        
         
@@ -85,7 +88,13 @@ class tkWindow:
         social_trait2 = StringVar()
         secret = StringVar()
 
-        # banes = StringVar()
+        feat_points = IntVar()
+        
+        feats = list()
+        
+        
+        
+        # banes = StringVar()        
         # boons = StringVar()
         # feats = StringVar()
         
@@ -140,37 +149,42 @@ class tkWindow:
         
         Label(statframe, text="Toughness", font="bold").grid(row=0, column=0, sticky=W+E)
         Label(statframe, textvariable=toughnessval, font=largefont).grid(row=1, column=0)
-        Label(statframe, text="Guard", font="bold").grid(row=2, column=0, sticky=W+E)
-        Label(statframe, textvariable=guardval, font=largefont).grid(row=3, column=0)
+        Label(statframe, text="Evasion", font="bold").grid(row=2, column=0, sticky=W+E)
+        Label(statframe, textvariable=evasionval, font=largefont).grid(row=3, column=0)
         Label(statframe, text="Resolve", font="bold").grid(row=4, column=0, sticky=W+E)
         Label(statframe, textvariable=resolveval, font=largefont).grid(row=5, column=0)
         Label(statframe, text="Hit Points", font="bold").grid(row=6, column=0, sticky=W+E)
         Label(statframe, textvariable=hpval, font=largefont).grid(row=7, column=0)
               
-        Label(fluffframe, text="Name").grid(row=1, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=name).grid(row=1, column=2, columnspan=2, sticky=W + E)
+        Label(fluffframe, text="Name").grid(row=0, column=0, sticky=W+E)
+        ttk.Entry(fluffframe, textvariable=name).grid(row=0, column=1, columnspan=2, sticky=W + E)
         
-        Label(fluffframe, text="Race").grid(row=1, column=6, sticky=W)
-        ttk.Entry(fluffframe, textvariable=race).grid(row=1, column=7, columnspan=2, sticky=W + E)
+        Label(fluffframe, text="Race").grid(row=0, column=3, sticky=W+E)
+        ttk.Entry(fluffframe, textvariable=race).grid(row=0, column=4, columnspan=2, sticky=W + E)
 
-        Label(fluffframe, text="Size").grid(row=1, column=10, sticky=W)
+        Label(fluffframe, text="Size").grid(row=0, column=6, sticky=W+E)
         ttk.Combobox(fluffframe, textvariable=size, values=("Small", "Medium", "Large"), width=10) \
-            .grid(row=1, column=11, sticky=W + E)
+            .grid(row=0, column=7, sticky=W + E)
         
-        Label(fluffframe, text="Physical Trait 1").grid(row=2, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait1).grid(row=2, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Physical Trait 1").grid(row=3, column=0, sticky=W+E)
+        ttk.Entry(fluffframe, textvariable=physical_trait1).grid(row=3, column=1, columnspan=7, sticky=W + E)
         
-        Label(fluffframe, text="Physical Trait 2").grid(row=3, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait2).grid(row=3, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Physical Trait 2").grid(row=4, column=0, sticky=W+E)
+        ttk.Entry(fluffframe, textvariable=physical_trait2).grid(row=4, column=1, columnspan=7, sticky=W + E)
         
-        Label(fluffframe, text="Social Trait 1").grid(row=4, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=social_trait1).grid(row=4, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Social Trait 1").grid(row=5, column=0, sticky=W+E)
+        ttk.Entry(fluffframe, textvariable=social_trait1).grid(row=5, column=1, columnspan=7, sticky=W + E)
         
-        Label(fluffframe, text="Social Trait 2").grid(row=5, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=social_trait2).grid(row=5, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Social Trait 2").grid(row=6, column=0, sticky=W+E)
+        ttk.Entry(fluffframe, textvariable=social_trait2).grid(row=6, column=1, columnspan=7, sticky=W + E)
         
-        Label(fluffframe, text="Secret").grid(row=6, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=secret).grid(row=6, column=2, columnspan=13, rowspan=3, sticky=W + E)
+        Label(fluffframe, text="Secret").grid(row=7, column=0, sticky=W+E)
+        ttk.Entry(fluffframe, textvariable=secret).grid(row=7, column=1, columnspan=7, sticky=W+E)
+        
+        Label(featsframe, text="Available Feats").grid(row=0, column=3, sticky=W)
+        Listbox(featsframe, height=10)
+        Label(featsframe, text="Selected Feats").grid(row=0, column=4, sticky=W)
+        Listbox(featsframe, height=10)
         
         stats['agilityval'].trace('w', calculate_stats)
         stats['fortitudeval'].trace('w', calculate_stats)
