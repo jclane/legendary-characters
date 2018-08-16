@@ -3,13 +3,11 @@ from tkinter import ttk
 from tkinter import font
 
 
-ability_points = 40 
-COSTS = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
-
 class tkWindow:
        
     def __init__(self, root):
-                   
+    
+                  
         def do_new():
             pass
 
@@ -18,7 +16,14 @@ class tkWindow:
 
         def do_print():
             pass
-
+        
+        def calculate_cost(*args):
+            COST_TO_INCREASE = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
+            points = 40
+            for stat in stats:
+                points = points - COST_TO_INCREASE[stats[stat].get()]
+            ability_points.set(points)
+        
         def calculate_stats(*args):
             toughnessval.set(10 + stats['fortitudeval'].get() + stats['willval'].get())
             guardval.set(10 + stats['agilityval'].get() + stats['willval'].get())
@@ -43,16 +48,16 @@ class tkWindow:
         abilitiesframe.grid(row=0, column=1, sticky=W)
         
         physicalframe = ttk.Frame(abilitiesframe)
-        physicalframe.grid(row=0, column=0, sticky=W)
+        physicalframe.grid(row=1, column=0, sticky=W)
         
         mentalframe = ttk.Frame(abilitiesframe)
-        mentalframe.grid(row=4, column=0, sticky=W)
+        mentalframe.grid(row=5, column=0, sticky=W)
         
         socialframe = ttk.Frame(abilitiesframe)
-        socialframe.grid(row=9, column=0, sticky=W)
+        socialframe.grid(row=10, column=0, sticky=W)
         
         extraordinaryframe = Frame(abilitiesframe)
-        extraordinaryframe.grid(row=13, column=0, sticky=W)
+        extraordinaryframe.grid(row=14, column=0, sticky=W)
  
         statframe = ttk.Frame(mainframe)
         statframe.grid(row=0, column=2, padx=25, pady=15, sticky=(N+E))
@@ -62,8 +67,10 @@ class tkWindow:
  
         largefont = font.Font(size=22)
         
+        ability_points = IntVar()
+        
         stats = {}
-
+                       
         toughnessval = IntVar()
         guardval = IntVar()
         resolveval = IntVar()
@@ -97,7 +104,10 @@ class tkWindow:
                     abilities[i].grid(row=i+1, column=1, padx=(35, 0))
                 else: 
                     abilities[i].grid(row=i+1, column=1)
-
+        
+        Label(abilitiesframe, text="Points Remaining:").grid(row=0, column=0, sticky=W)
+        Label(abilitiesframe, textvariable=ability_points).grid(row=0, column=1, sticky=W)
+        
         Label(physicalframe, text="Physical", font="bold").grid(row=0, column=0, sticky=W)
         Label(physicalframe, text="Agility").grid(row=1, column=0, sticky=W)
         Label(physicalframe, text="Fortitude").grid(row=2, column=0, sticky=W)
@@ -166,6 +176,9 @@ class tkWindow:
         stats['fortitudeval'].trace('w', calculate_stats)
         stats['willval'].trace('w', calculate_stats)
         stats['presenceval'].trace('w', calculate_stats)   
+        
+        for stat in stats:
+            stats[stat].trace_add('write', calculate_cost)
         
 
 root = Tk()
