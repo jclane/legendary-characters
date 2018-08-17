@@ -8,6 +8,7 @@ class NewCharacter:
     def __init__(self, stats):
         self.stats = stats
 
+
 class tkWindow:
 
     def __init__(self, root):
@@ -26,6 +27,8 @@ class tkWindow:
             points = 40
             for stat in stats:
                 points = points - cost_to_increase[stats[stat].get()]
+                if points < 40:
+                    pass  # alert user of 40 point limit
             ability_points.set(points)
 
         def calculate_stats(*args):
