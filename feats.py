@@ -12,7 +12,7 @@ class Feat:
         self.effect = effect
 
 
-file = r'C:\Users\<BLAH>\Desktop\data.csv'
+file = r'./data/feat_list.csv'
 
 feats = {}
 

@@ -1,3 +1,4 @@
+import feats
 from tkinter import *
 from tkinter import ttk
 from tkinter import font
@@ -52,7 +53,7 @@ class tkWindow:
         mainframe.grid(row=0, column=0, sticky=(N, W, E, S))
 
         abilitiesframe = ttk.Frame(mainframe, padding="5 5 5 5")
-        abilitiesframe.grid(row=0, column=1, sticky=W)
+        abilitiesframe.grid(row=0, column=0, sticky=W)
 
         physicalframe = ttk.Frame(abilitiesframe)
         physicalframe.grid(row=1, column=0, sticky=W)
@@ -71,6 +72,9 @@ class tkWindow:
 
         fluffframe = ttk.Frame(mainframe)
         fluffframe.grid(row=0, column=3, sticky=(N, W, E, S))
+
+        featsframe = ttk.Frame(mainframe)
+        featsframe.grid(row=1, column=3, stick=(N, W, E, S))
 
         largefont = font.Font(size=22)
 
@@ -156,30 +160,33 @@ class tkWindow:
         Label(statframe, text="Hit Points", font="bold").grid(row=6, column=0, sticky=W + E)
         Label(statframe, textvariable=hpval, font=largefont).grid(row=7, column=0)
 
-        Label(fluffframe, text="Name").grid(row=1, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=name).grid(row=1, column=2, columnspan=2, sticky=W + E)
+        Label(fluffframe, text="Name").grid(row=0, column=0, sticky=W)
+        ttk.Entry(fluffframe, textvariable=name).grid(row=0, column=1, columnspan=2, sticky=W + E)
 
-        Label(fluffframe, text="Race").grid(row=1, column=6, sticky=W)
-        ttk.Entry(fluffframe, textvariable=race).grid(row=1, column=7, columnspan=2, sticky=W + E)
+        Label(fluffframe, text="Race").grid(row=0, column=3, sticky=W)
+        ttk.Entry(fluffframe, textvariable=race).grid(row=0, column=4, columnspan=2, sticky=W + E)
 
-        Label(fluffframe, text="Size").grid(row=1, column=10, sticky=W)
+        Label(fluffframe, text="Size").grid(row=0, column=7, sticky=W)
         ttk.Combobox(fluffframe, textvariable=size, values=("Small", "Medium", "Large"), width=10) \
-            .grid(row=1, column=11, sticky=W + E)
+            .grid(row=0, column=8, sticky=W + E)
 
-        Label(fluffframe, text="Physical Trait 1").grid(row=2, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait1).grid(row=2, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Physical Trait 1").grid(row=1, column=0, sticky=W)
+        ttk.Entry(fluffframe, textvariable=physical_trait1).grid(row=1, column=1, columnspan=8, sticky=W + E)
 
-        Label(fluffframe, text="Physical Trait 2").grid(row=3, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait2).grid(row=3, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Physical Trait 2").grid(row=2, column=0, sticky=W)
+        ttk.Entry(fluffframe, textvariable=physical_trait2).grid(row=2, column=1, columnspan=8, sticky=W + E)
 
-        Label(fluffframe, text="Social Trait 1").grid(row=4, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=social_trait1).grid(row=4, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Social Trait 1").grid(row=3, column=0, sticky=W)
+        ttk.Entry(fluffframe, textvariable=social_trait1).grid(row=3, column=1, columnspan=8, sticky=W + E)
 
-        Label(fluffframe, text="Social Trait 2").grid(row=5, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=social_trait2).grid(row=5, column=2, columnspan=13, sticky=W + E)
+        Label(fluffframe, text="Social Trait 2").grid(row=4, column=0, sticky=W)
+        ttk.Entry(fluffframe, textvariable=social_trait2).grid(row=4, column=1, columnspan=8, sticky=W + E)
 
-        Label(fluffframe, text="Secret").grid(row=6, column=1, sticky=W)
-        ttk.Entry(fluffframe, textvariable=secret).grid(row=6, column=2, columnspan=13, rowspan=3, sticky=W + E)
+        Label(fluffframe, text="Secret").grid(row=5, column=0, sticky=W)
+        ttk.Entry(fluffframe, textvariable=secret).grid(row=5, column=1, columnspan=8, sticky=W + E)
+
+        Label(featsframe, text="Available Feats").grid(row=0, column=0, sticky=W)
+        Listbox(featsframe, height=10).grid(row=1, column=0, sticky=W)
 
         stats['agilityval'].trace('w', calculate_stats)
         stats['fortitudeval'].trace('w', calculate_stats)
