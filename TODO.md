@@ -17,13 +17,13 @@ So this is my design guide.
 
 ### Step 1:  Describe your character.
 
-- [ ] Bare minimum:
-  - [ ] User should be able to enter a name.
-  - [ ] User should be able to enter a race.
-  - [ ] User should be able to select a size for their character.
-  - [ ] User should be able to select/enter two exceptional physical traits.
-  - [ ] User should be able to select/enter two defining social traits.
-  - [ ] User should be able to select/enter a secret.
+- [x] Bare minimum:
+  - [x] User should be able to enter a name.
+  - [x] User should be able to enter a race.
+  - [x] User should be able to select a size for their character.
+  - [x] User should be able to select/enter two exceptional physical traits.
+  - [x] User should be able to select/enter two defining social traits.
+  - [x] User should be able to select/enter a secret.
 
 - [ ] Optional:
   - [ ] Random name generator
@@ -35,10 +35,10 @@ So this is my design guide.
 There are two methods of choosing attribute.  I should account for both of them.  
   
 1. [ ] Quick build (profiles with pre-selected attributes)
-2. [ ] Custom build
+2. [x] Custom build
   
-  - [ ] User is given 40 attribute points to buy initial attributes.
-  - [ ] Cost to raise attributes is based on table below:
+  - [x] User is given 40 attribute points to buy initial attributes.
+  - [x] Cost to raise attributes is based on table below:
     
   | Attribute Level | Cost to Raise |
   | --- | --- |
@@ -49,7 +49,7 @@ There are two methods of choosing attribute.  I should account for both of them.
   | 4 | 10 |
   | 5 | 15 |
   
-  3. [ ] User should be able to raise the following attributes:
+  3. [x] User should be able to raise the following attributes:
 
   | Physical | |
   | --- | --- |
@@ -83,11 +83,11 @@ There are two methods of choosing attribute.  I should account for both of them.
 
 ### Step 3. Record Defenses, Hit Points, and Speed
 
-- [ ] The application should calculate the following for the user.
-  - [ ] Toughness = 10 + Fortitude + Will
-  - [ ] Guard = 10 + Agility + Will
-  - [ ] Resolve = 10 + Presence + Will
-  - [ ] Hit Points = 2 * (Fortitude + Presence + Will) + 10
+- [x] The application should calculate the following for the user.
+  - [x] Toughness = 10 + Fortitude + Will
+  - [x] Guard = 10 + Agility + Will
+  - [x] Resolve = 10 + Presence + Will
+  - [x] Hit Points = 2 * (Fortitude + Presence + Will) + 10
 - [ ] The characters base speed should be set to 30 and made available or feat/abilities to alter later on.
 
 ### Step 4: Purchase Feats
