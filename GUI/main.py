@@ -21,14 +21,14 @@ class tkWindow:
         def do_print():
             pass
 
-        def calculate_cost():
+        def calculate_cost(*args):
             cost_to_increase = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
             points = 40
             for stat in stats:
                 points = points - cost_to_increase[stats[stat].get()]
             ability_points.set(points)
 
-        def calculate_stats():
+        def calculate_stats(*args):
             toughnessval.set(10 + stats["fortitudeval"].get() + stats["willval"].get())
             guardval.set(10 + stats["agilityval"].get() + stats["willval"].get())
             resolveval.set(10 + stats["presenceval"].get() + stats["willval"].get())
