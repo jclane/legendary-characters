@@ -23,6 +23,18 @@ class tkWindow:
         def do_print():
             pass
 
+        def open_feats_window(*args, **kwargs):
+            character = NewCharacter(stats)
+            window = Toplevel(root)
+
+            Label(window, text="Available Feats").grid(row=0, column=7, sticky=W + E)
+            available_feats = Listbox(window, height=10)
+            available_feats.grid(row=1, column=7, sticky=W)
+
+            for feat in feat_list:
+                if meets_prereqs(character, feat):
+                    available_feats.insert(END, feat_list[feat].title)
+
         def calculate_cost(*args):
             cost_to_increase = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
             points = 40
@@ -185,7 +197,7 @@ class tkWindow:
         Label(fluffframe, text="Secret").grid(row=5, column=0, sticky=W)
         ttk.Entry(fluffframe, textvariable=secret).grid(row=5, column=1, columnspan=8, sticky=W + E)
 
-        Button(featsframe, text="Purchase Feats").grid(row=1, column=3, sticky=W + E)
+        Button(featsframe, text="Purchase Feats", command=open_feats_window).grid(row=1, column=3, sticky=W + E)
         Label(featsframe, text="Selected Feats").grid(row=0, column=7, sticky=W + E)
         Listbox(featsframe, height=10).grid(row=1, column=7, sticky=W)
 
@@ -193,8 +205,6 @@ class tkWindow:
         stats['fortitudeval'].trace('w', calculate_stats)
         stats['willval'].trace('w', calculate_stats)
         stats['presenceval'].trace('w', calculate_stats)
-
-        character = NewCharacter(stats)
 
         for stat in stats:
             stats[stat].trace_add('write', calculate_cost)
