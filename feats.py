@@ -14,7 +14,7 @@ class Feat:
 
 file = r'./data/feat_list.csv'
 
-feats = {}
+feat_list = {}
 
 with open(file, "r", encoding="latin1") as csvfile:
     reader = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
@@ -26,12 +26,13 @@ with open(file, "r", encoding="latin1") as csvfile:
         desc = row[4]
         effect = row[5]
 
-        feats[title.lower()] = Feat(title, cost, prereqs, prereq_min, desc, effect)
+        feat_list[title.lower()] = Feat(title, cost, prereqs, prereq_min, desc, effect)
 
 
 def meets_prereqs(character, feat):
     for prereq in feat.prereqs:
-        if character.stats[prereq] and character.stats[prereq] >= feat.prereq_min:
+        if character.stats[prereq] and character.stats[prereq].get() >= feat.prereq_min:
             return True
         else:
             return False
+
