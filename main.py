@@ -185,11 +185,6 @@ class tkWindow:
         Label(fluffframe, text="Secret").grid(row=5, column=0, sticky=W)
         ttk.Entry(fluffframe, textvariable=secret).grid(row=5, column=1, columnspan=8, sticky=W + E)
 
-        def get_feats(*args):
-            for feat in feat_list:
-                if meets_prereqs(character, feat_list[feat]):
-                    available_feats.append(feat_list[feat].title)
-
         Button(featsframe, text="Purchase Feats").grid(row=1, column=3, sticky=W + E)
         Label(featsframe, text="Selected Feats").grid(row=0, column=7, sticky=W + E)
         Listbox(featsframe, height=10).grid(row=1, column=7, sticky=W)
@@ -202,8 +197,7 @@ class tkWindow:
         character = NewCharacter(stats)
 
         for stat in stats:
-            # stats[stat].trace_add('write', calculate_cost)
-            stats[stat].trace_add('write', get_feats)
+            stats[stat].trace_add('write', calculate_cost)
 
 
 root = Tk()
