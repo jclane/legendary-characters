@@ -1,3 +1,5 @@
+import feats as fts
+
 import tkinter as tk  
 from tkinter import ttk as ttk
 from tkinter import font as tkfont
@@ -38,7 +40,8 @@ class Main(tk.Tk):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()        
-        
+       
+       
 class MainMenu(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -46,23 +49,27 @@ class MainMenu(tk.Frame):
 
         
 class NewCharacter(tk.Frame):
-    
+     
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
     
+        class Character:
+            
+            def __init__(self, stats):
+                self.stats = stats
         
         def open_feats_window(*args, **kwargs):
-            character = NewCharacter(stats)
-            window = Toplevel(root)
+            char = Character(stats)
+            window = tk.Toplevel(self)
 
-            Label(window, text="Available Feats").grid(row=0, column=7, sticky="we")
-            available_feats = Listbox(window, height=10)
+            tk.Label(window, text="Available Feats").grid(row=0, column=7, sticky="we")
+            available_feats = tk.Listbox(window, height=10)
             available_feats.grid(row=1, column=7, sticky="w")
 
-            for feat in feat_list:
-                if meets_prereqs(character, feat):
-                    available_feats.insert(END, feat_list[feat].title)
+            for feat in fts.feat_list:
+                if fts.meets_prereqs(char, feat):
+                    available_feats.insert("end", fts.feat_list[feat].title)
 
         def calculate_cost(*args):
             cost_to_increase = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
