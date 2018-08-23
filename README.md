@@ -1,5 +1,9 @@
 # legendary-characters
 
+## 8/23/208
+
+Finally got the stacked frames working.
+
 ## 8/18/2018
 
 I've realized I can't do two listboxes for the feats.  What I'm going to do instead is have a button that when pressed will
