@@ -1,35 +1,64 @@
-from feats import *
-from tkinter import *
-from tkinter import ttk
-from tkinter import font
+import tkinter as tk  
+from tkinter import ttk as ttk
+from tkinter import font as tkfont
 
 
-class NewCharacter:
+class Main(tk.Tk):
 
-    def __init__(self, stats):
-        self.stats = stats
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        
+        menubar = tk.Menu(self)
+        menu_file = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(menu=menu_file, label="File")
+        menu_file.add_command(label="New", command=lambda: self.show_frame("NewCharacter"))
+        menu_file.add_command(label="Load", command=print("load"))
+        menu_file.add_command(label="Save", command=print("save"))
+        menu_file.add_command(label="Print", command=print("print"))
+        menu_file.add_separator()
+        menu_file.add_command(label="Quit", command=self.destroy)
+        self.config(menu=menubar)
 
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
 
-class tkWindow:
+        self.frames = {}
+        
+        for F in (MainMenu, NewCharacter):
+            page_name = F.__name__
+            frame = F(parent=container, controller=self)
+            self.frames[page_name] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
 
-    def __init__(self, root):
+        self.show_frame("MainMenu")
 
-        def do_new():
-            pass
+    def show_frame(self, page_name):
+        '''Show a frame for the given page name'''
+        frame = self.frames[page_name]
+        frame.tkraise()        
+        
+class MainMenu(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
 
-        def do_save():
-            pass
-
-        def do_print():
-            pass
-
+        
+class NewCharacter(tk.Frame):
+    
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+    
+        
         def open_feats_window(*args, **kwargs):
             character = NewCharacter(stats)
             window = Toplevel(root)
 
-            Label(window, text="Available Feats").grid(row=0, column=7, sticky=W + E)
+            Label(window, text="Available Feats").grid(row=0, column=7, sticky="we")
             available_feats = Listbox(window, height=10)
-            available_feats.grid(row=1, column=7, sticky=W)
+            available_feats.grid(row=1, column=7, sticky="w")
 
             for feat in feat_list:
                 if meets_prereqs(character, feat):
@@ -50,67 +79,56 @@ class tkWindow:
             resolveval.set(10 + stats["presenceval"].get() + stats["willval"].get())
             hpval.set(2 * (stats["fortitudeval"].get() + stats["presenceval"].get() + stats["willval"].get()) + 10)
 
-        menubar = Menu(root)
-        menu_file = Menu(menubar, tearoff=0)
-        menubar.add_cascade(menu=menu_file, label="File")
-        menu_file.add_command(label="New", command=do_new)
-        menu_file.add_command(label="Save", command=do_save)
-        menu_file.add_command(label="Print", command=do_print)
-        menu_file.add_separator()
-        menu_file.add_command(label="Quit", command=root.destroy)
+        mainframe = tk.Frame(self)
+        mainframe.grid(row=0, column=0, sticky="nsew")
 
-        root.config(menu=menubar)
+        abilitiesframe = tk.Frame(mainframe)
+        abilitiesframe.grid(row=0, column=0, sticky="w")
 
-        mainframe = ttk.Frame(root)
-        mainframe.grid(row=0, column=0, sticky=(N, W, E, S))
+        physicalframe = tk.Frame(abilitiesframe)
+        physicalframe.grid(row=1, column=0, sticky="w")
 
-        abilitiesframe = ttk.Frame(mainframe, padding="5 5 5 5")
-        abilitiesframe.grid(row=0, column=0, sticky=W)
+        mentalframe = tk.Frame(abilitiesframe)
+        mentalframe.grid(row=5, column=0, sticky="w")
 
-        physicalframe = ttk.Frame(abilitiesframe)
-        physicalframe.grid(row=1, column=0, sticky=W)
+        socialframe = tk.Frame(abilitiesframe)
+        socialframe.grid(row=10, column=0, sticky="w")
 
-        mentalframe = ttk.Frame(abilitiesframe)
-        mentalframe.grid(row=5, column=0, sticky=W)
+        extraordinaryframe = tk.Frame(abilitiesframe)
+        extraordinaryframe.grid(row=14, column=0, sticky="w")
 
-        socialframe = ttk.Frame(abilitiesframe)
-        socialframe.grid(row=10, column=0, sticky=W)
+        statframe = tk.Frame(mainframe)
+        statframe.grid(row=0, column=2, padx=25, pady=15, sticky="ne")
 
-        extraordinaryframe = Frame(abilitiesframe)
-        extraordinaryframe.grid(row=14, column=0, sticky=W)
+        fluffframe = tk.Frame(mainframe)
+        fluffframe.grid(row=0, column=3, sticky="nsew")
 
-        statframe = ttk.Frame(mainframe)
-        statframe.grid(row=0, column=2, padx=25, pady=15, sticky=(N + E))
+        featsframe = tk.Frame(fluffframe)
+        featsframe.grid(row=6, column=0, stick="nsew")
 
-        fluffframe = ttk.Frame(mainframe)
-        fluffframe.grid(row=0, column=3, sticky=(N, W, E, S))
+        largefont = tkfont.Font(size=22)
 
-        featsframe = ttk.Frame(fluffframe)
-        featsframe.grid(row=6, column=0, stick=(N, W, E, S))
-
-        largefont = font.Font(size=22)
-
-        ability_points = IntVar()
+        ability_points = tk.IntVar()
 
         stats = {}
 
-        toughnessval = IntVar()
-        guardval = IntVar()
-        resolveval = IntVar()
-        hpval = IntVar()
+        toughnessval = tk.IntVar()
+        guardval = tk.IntVar()
+        resolveval = tk.IntVar()
+        hpval = tk.IntVar()
 
-        name = StringVar()
-        race = StringVar()
-        size = StringVar()
-        physical_trait1 = StringVar()
-        physical_trait2 = StringVar()
-        social_trait1 = StringVar()
-        social_trait2 = StringVar()
-        secret = StringVar()
+        name = tk.StringVar()
+        race = tk.StringVar()
+        size = tk.StringVar()
+        physical_trait1 = tk.StringVar()
+        physical_trait2 = tk.StringVar()
+        social_trait1 = tk.StringVar()
+        social_trait2 = tk.StringVar()
+        secret = tk.StringVar()
 
-        # banes = StringVar()
-        # boons = StringVar()
-        # feats = StringVar()
+        # banes = tk.StringVar()
+        # boons = tk.StringVar()
+        # feats = tk.StringVar()
 
         def add_spinboxes(group, frame):
             abilities = list()
@@ -121,8 +139,8 @@ class tkWindow:
                                         'Entropy', 'Influence', 'Movement', 'Prescience', 'Protection'),
                       'Mental': ('Learning', 'Logic', 'Perception', 'Will')}
             for i in range(0, len(groups[group])):
-                abilities.append(Spinbox(frame, from_=0, to=5, width=4))
-                abilities[i].var = IntVar()
+                abilities.append(tk.Spinbox(frame, from_=0, to=5, width=4))
+                abilities[i].var = tk.IntVar()
                 abilities[i]['textvariable'] = abilities[i].var
                 stats[groups[group][i].lower() + 'val'] = abilities[i].var
                 if group != "Extraordinary":
@@ -130,76 +148,76 @@ class tkWindow:
                 else:
                     abilities[i].grid(row=i + 1, column=1)
 
-        Label(abilitiesframe, text="Points Remaining:").grid(row=0, column=0, sticky=W)
-        Label(abilitiesframe, textvariable=ability_points).grid(row=0, column=1, sticky=W)
+        tk.Label(abilitiesframe, text="Points Remaining:").grid(row=0, column=0, sticky="w")
+        tk.Label(abilitiesframe, textvariable=ability_points).grid(row=0, column=1, sticky="w")
 
-        Label(physicalframe, text="Physical", font="bold").grid(row=0, column=0, sticky=W)
-        Label(physicalframe, text="Agility").grid(row=1, column=0, sticky=W)
-        Label(physicalframe, text="Fortitude").grid(row=2, column=0, sticky=W)
-        Label(physicalframe, text="Might").grid(row=3, column=0, sticky=W)
+        tk.Label(physicalframe, text="Physical", font="bold").grid(row=0, column=0, sticky="w")
+        tk.Label(physicalframe, text="Agility").grid(row=1, column=0, sticky="w")
+        tk.Label(physicalframe, text="Fortitude").grid(row=2, column=0, sticky="w")
+        tk.Label(physicalframe, text="Might").grid(row=3, column=0, sticky="w")
         add_spinboxes("Physical", physicalframe)
 
-        Label(mentalframe, text="Mental", font="bold").grid(row=0, column=0, sticky=W)
-        Label(mentalframe, text="Learning").grid(row=1, column=0, sticky=W)
-        Label(mentalframe, text="Logic").grid(row=2, column=0, sticky=W)
-        Label(mentalframe, text="Perception").grid(row=3, column=0, sticky=W)
-        Label(mentalframe, text="Will").grid(row=4, column=0, sticky=W)
+        tk.Label(mentalframe, text="Mental", font="bold").grid(row=0, column=0, sticky="w")
+        tk.Label(mentalframe, text="Learning").grid(row=1, column=0, sticky="w")
+        tk.Label(mentalframe, text="Logic").grid(row=2, column=0, sticky="w")
+        tk.Label(mentalframe, text="Perception").grid(row=3, column=0, sticky="w")
+        tk.Label(mentalframe, text="Will").grid(row=4, column=0, sticky="w")
         add_spinboxes("Mental", mentalframe)
 
-        Label(socialframe, text="Social", font="bold").grid(row=0, column=0, sticky=W)
-        Label(socialframe, text="Deception").grid(row=1, column=0, sticky=W)
-        Label(socialframe, text="Persuasion").grid(row=2, column=0, sticky=W)
-        Label(socialframe, text="Presence").grid(row=3, column=0, sticky=W)
+        tk.Label(socialframe, text="Social", font="bold").grid(row=0, column=0, sticky="w")
+        tk.Label(socialframe, text="Deception").grid(row=1, column=0, sticky="w")
+        tk.Label(socialframe, text="Persuasion").grid(row=2, column=0, sticky="w")
+        tk.Label(socialframe, text="Presence").grid(row=3, column=0, sticky="w")
         add_spinboxes("Social", socialframe)
 
-        Label(extraordinaryframe, text="Extraordinary", font="bold").grid(row=0, column=0, sticky=W)
-        Label(extraordinaryframe, text="Alteration").grid(row=1, column=0, sticky=W)
-        Label(extraordinaryframe, text="Creation").grid(row=2, column=0, sticky=W)
-        Label(extraordinaryframe, text="Energy").grid(row=3, column=0, sticky=W)
-        Label(extraordinaryframe, text="Entropy").grid(row=4, column=0, sticky=W)
-        Label(extraordinaryframe, text="Influence").grid(row=5, column=0, sticky=W)
-        Label(extraordinaryframe, text="Movement").grid(row=6, column=0, sticky=W)
-        Label(extraordinaryframe, text="Prescience").grid(row=7, column=0, sticky=W)
-        Label(extraordinaryframe, text="Protection").grid(row=8, column=0, sticky=W)
+        tk.Label(extraordinaryframe, text="Extraordinary", font="bold").grid(row=0, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Alteration").grid(row=1, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Creation").grid(row=2, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Energy").grid(row=3, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Entropy").grid(row=4, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Influence").grid(row=5, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Movement").grid(row=6, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Prescience").grid(row=7, column=0, sticky="w")
+        tk.Label(extraordinaryframe, text="Protection").grid(row=8, column=0, sticky="w")
         add_spinboxes("Extraordinary", extraordinaryframe)
 
-        Label(statframe, text="Toughness", font="bold").grid(row=0, column=0, sticky=W + E)
-        Label(statframe, textvariable=toughnessval, font=largefont).grid(row=1, column=0)
-        Label(statframe, text="Guard", font="bold").grid(row=2, column=0, sticky=W + E)
-        Label(statframe, textvariable=guardval, font=largefont).grid(row=3, column=0)
-        Label(statframe, text="Resolve", font="bold").grid(row=4, column=0, sticky=W + E)
-        Label(statframe, textvariable=resolveval, font=largefont).grid(row=5, column=0)
-        Label(statframe, text="Hit Points", font="bold").grid(row=6, column=0, sticky=W + E)
-        Label(statframe, textvariable=hpval, font=largefont).grid(row=7, column=0)
+        tk.Label(statframe, text="Toughness", font="bold").grid(row=0, column=0, sticky="we")
+        tk.Label(statframe, textvariable=toughnessval, font=largefont).grid(row=1, column=0)
+        tk.Label(statframe, text="Guard", font="bold").grid(row=2, column=0, sticky="we")
+        tk.Label(statframe, textvariable=guardval, font=largefont).grid(row=3, column=0)
+        tk.Label(statframe, text="Resolve", font="bold").grid(row=4, column=0, sticky="we")
+        tk.Label(statframe, textvariable=resolveval, font=largefont).grid(row=5, column=0)
+        tk.Label(statframe, text="Hit Points", font="bold").grid(row=6, column=0, sticky="we")
+        tk.Label(statframe, textvariable=hpval, font=largefont).grid(row=7, column=0)
 
-        Label(fluffframe, text="Name").grid(row=0, column=0, sticky=W)
-        ttk.Entry(fluffframe, textvariable=name).grid(row=0, column=1, columnspan=2, sticky=W + E)
+        tk.Label(fluffframe, text="Name").grid(row=0, column=0, sticky="w")
+        tk.Entry(fluffframe, textvariable=name).grid(row=0, column=1, columnspan=2, sticky="we")
 
-        Label(fluffframe, text="Race").grid(row=0, column=3, sticky=W)
-        ttk.Entry(fluffframe, textvariable=race).grid(row=0, column=4, columnspan=2, sticky=W + E)
+        tk.Label(fluffframe, text="Race").grid(row=0, column=3, sticky="w")
+        tk.Entry(fluffframe, textvariable=race).grid(row=0, column=4, columnspan=2, sticky="we")
 
-        Label(fluffframe, text="Size").grid(row=0, column=7, sticky=W)
+        tk.Label(fluffframe, text="Size").grid(row=0, column=7, sticky="w")
         ttk.Combobox(fluffframe, textvariable=size, values=("Small", "Medium", "Large"), width=10) \
-            .grid(row=0, column=8, sticky=W + E)
+            .grid(row=0, column=8, sticky="we")
 
-        Label(fluffframe, text="Physical Trait 1").grid(row=1, column=0, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait1).grid(row=1, column=1, columnspan=8, sticky=W + E)
+        tk.Label(fluffframe, text="Physical Trait 1").grid(row=1, column=0, sticky="w")
+        tk.Entry(fluffframe, textvariable=physical_trait1).grid(row=1, column=1, columnspan=8, sticky="we")
 
-        Label(fluffframe, text="Physical Trait 2").grid(row=2, column=0, sticky=W)
-        ttk.Entry(fluffframe, textvariable=physical_trait2).grid(row=2, column=1, columnspan=8, sticky=W + E)
+        tk.Label(fluffframe, text="Physical Trait 2").grid(row=2, column=0, sticky="w")
+        tk.Entry(fluffframe, textvariable=physical_trait2).grid(row=2, column=1, columnspan=8, sticky="we")
 
-        Label(fluffframe, text="Social Trait 1").grid(row=3, column=0, sticky=W)
-        ttk.Entry(fluffframe, textvariable=social_trait1).grid(row=3, column=1, columnspan=8, sticky=W + E)
+        tk.Label(fluffframe, text="Social Trait 1").grid(row=3, column=0, sticky="w")
+        tk.Entry(fluffframe, textvariable=social_trait1).grid(row=3, column=1, columnspan=8, sticky="we")
 
-        Label(fluffframe, text="Social Trait 2").grid(row=4, column=0, sticky=W)
-        ttk.Entry(fluffframe, textvariable=social_trait2).grid(row=4, column=1, columnspan=8, sticky=W + E)
+        tk.Label(fluffframe, text="Social Trait 2").grid(row=4, column=0, sticky="w")
+        tk.Entry(fluffframe, textvariable=social_trait2).grid(row=4, column=1, columnspan=8, sticky="we")
 
-        Label(fluffframe, text="Secret").grid(row=5, column=0, sticky=W)
-        ttk.Entry(fluffframe, textvariable=secret).grid(row=5, column=1, columnspan=8, sticky=W + E)
+        tk.Label(fluffframe, text="Secret").grid(row=5, column=0, sticky="w")
+        tk.Entry(fluffframe, textvariable=secret).grid(row=5, column=1, columnspan=8, sticky="we")
 
-        Button(featsframe, text="Purchase Feats", command=open_feats_window).grid(row=1, column=3, sticky=W + E)
-        Label(featsframe, text="Selected Feats").grid(row=0, column=7, sticky=W + E)
-        Listbox(featsframe, height=10).grid(row=1, column=7, sticky=W)
+        tk.Button(featsframe, text="Purchase Feats", command=open_feats_window).grid(row=1, column=3, sticky="we")
+        tk.Label(featsframe, text="Selected Feats").grid(row=0, column=7, sticky="we")
+        tk.Listbox(featsframe, height=10).grid(row=1, column=7, sticky="w")
 
         stats['agilityval'].trace('w', calculate_stats)
         stats['fortitudeval'].trace('w', calculate_stats)
@@ -209,8 +227,8 @@ class tkWindow:
         for stat in stats:
             stats[stat].trace_add('write', calculate_cost)
 
-
-root = Tk()
-root.title("Legendary Characters")
-tkWindow(root)
-root.mainloop()
+    
+if __name__ == "__main__":
+    app = Main()
+    app.title("Legenardy Characters")
+    app.mainloop()
