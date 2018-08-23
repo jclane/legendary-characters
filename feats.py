@@ -1,4 +1,4 @@
-import csv
+from csv import reader as csvreader
 
 
 class Feat:
@@ -17,7 +17,7 @@ file = r'./data/feat_list.csv'
 feat_list = {}
 
 with open(file, "r", encoding="latin1") as csvfile:
-    reader = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
+    reader = csvreader(csvfile, quotechar='"', skipinitialspace=True)
     for row in reader:
         title = row[0]
         cost = int(row[1])
