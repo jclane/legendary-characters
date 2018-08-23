@@ -69,7 +69,7 @@ class NewCharacter(tk.Frame):
 
             for feat in fts.feat_list:
                 if fts.meets_prereqs(char, feat):
-                    available_feats.insert("end", fts.feat_list[feat].title)
+                    available_feats.insert("end", fts.feat_list[feat].title + " " + str(fts.feat_list[feat].cost))
 
         def calculate_cost(*args):
             cost_to_increase = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
