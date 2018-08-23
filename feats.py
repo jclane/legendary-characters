@@ -30,8 +30,7 @@ with open(file, "r", encoding="latin1") as csvfile:
 
 
 def meets_prereqs(character, feat):
+    pdb.set_trace()
     for prereq in feat_list[feat].prereqs:
         if character.stats[prereq] and character.stats[prereq].get() >= feat_list[feat].prereq_min:
             return True
-        else:
-            return False
