@@ -4,6 +4,11 @@ import tkinter as tk
 from tkinter import ttk as ttk
 from tkinter import font as tkfont
 
+class Character:
+    
+    def __init__(self, stats, purchased_feats=list()):
+        self.stats = stats
+        self.purchased_feats = purchased_feats
 
 class Main(tk.Tk):
 
@@ -53,23 +58,31 @@ class NewCharacter(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-    
-        class Character:
-            
-            def __init__(self, stats):
-                self.stats = stats
         
         def open_feats_window(*args, **kwargs):
-            char = Character(stats)
+            char = Character(stats)            
+            
+            def confirm_purchase():  # NEED TO CHANGE THIS LATER.  CURRENTLY ADDS ALL AVAILABLE FEATS!
+                for i in range(0,available_feats.size()):
+                    char.purchased_feats.append(available_feats.get(i))
+                list_feats(char.purchased_feats)
+                window.destroy
+            
             window = tk.Toplevel(self)
 
-            tk.Label(window, text="Available Feats").grid(row=0, column=7, sticky="we")
+            tk.Label(window, text="Available Feats").grid(row=0, column=0, sticky="we")
             available_feats = tk.Listbox(window, height=10)
-            available_feats.grid(row=1, column=7, sticky="w")
+            available_feats.grid(row=1, column=0, sticky="w")
 
             for feat in fts.feat_list:
                 if fts.meets_prereqs(char, feat):
-                    available_feats.insert("end", fts.feat_list[feat].title + " " + str(fts.feat_list[feat].cost))
+                    available_feats.insert("end", fts.feat_list[feat].title)
+                    
+            tk.Label(window, text="Selected Feats").grid(row=0, column=1, sticky="we")
+            selected_feats = tk.Listbox(window, height=10)
+            selected_feats.grid(row=1, column=1, sticky="w")
+            
+            tk.Button(window, text="Confirm", command=confirm_purchase).grid(row=2, column=1, sticky="we")
 
         def calculate_cost(*args):
             cost_to_increase = {0: 0, 1: 1, 2: 3, 3: 6, 4: 10, 5: 15}
@@ -155,6 +168,12 @@ class NewCharacter(tk.Frame):
                 else:
                     abilities[i].grid(row=i + 1, column=1)
 
+        def list_feats(purchased_feats):
+            purchased_feats_list = list()
+                        
+            for i in range(0, len(purchased_feats)):
+                purchased_feats_list.append(tk.Label(featsframe, text=purchased_feats[i]).grid(row=i + 1, column=1))
+        
         tk.Label(abilitiesframe, text="Points Remaining:").grid(row=0, column=0, sticky="w")
         tk.Label(abilitiesframe, textvariable=ability_points).grid(row=0, column=1, sticky="w")
 
@@ -222,9 +241,10 @@ class NewCharacter(tk.Frame):
         tk.Label(fluffframe, text="Secret").grid(row=5, column=0, sticky="w")
         tk.Entry(fluffframe, textvariable=secret).grid(row=5, column=1, columnspan=8, sticky="we")
 
-        tk.Button(featsframe, text="Purchase Feats", command=open_feats_window).grid(row=1, column=3, sticky="we")
-        tk.Label(featsframe, text="Selected Feats").grid(row=0, column=7, sticky="we")
-        tk.Listbox(featsframe, height=10).grid(row=1, column=7, sticky="w")
+        tk.Button(featsframe, text="Purchase Feats", command=open_feats_window).grid(row=0, column=0, sticky="we")
+        tk.Label(featsframe, text="Title").grid(row=0, column=1, sticky="we")
+        tk.Label(featsframe, text="Cost").grid(row=0, column=2, sticky="we")
+        tk.Label(featsframe, text="Effect").grid(row=0, column=3, sticky="we")
 
         stats['agilityval'].trace('w', calculate_stats)
         stats['fortitudeval'].trace('w', calculate_stats)
@@ -233,7 +253,7 @@ class NewCharacter(tk.Frame):
 
         for stat in stats:
             stats[stat].trace_add('write', calculate_cost)
-
+        
     
 if __name__ == "__main__":
     app = Main()
