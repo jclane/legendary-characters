@@ -30,8 +30,9 @@ with open(file, "r", encoding="latin1") as csvfile:
 
 
 def meets_prereqs(character, feat):
-    for prereq in feat_list[feat].prereqs:
-        if character.stats[prereq] and character.stats[prereq].get() >= feat_list[feat].prereq_min:
-            return True
-            
-            
+    if len(feat_list[feat].prereqs) > 1:
+        for prereq in feat_list[feat].prereqs:
+            if character.stats[prereq] and character.stats[prereq].get() >= feat_list[feat].prereq_min:
+                return True
+    else:
+        return True
