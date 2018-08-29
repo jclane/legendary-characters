@@ -71,6 +71,7 @@ class NewCharacter(tk.Frame):
             window = tk.Toplevel(self)
 
             tk.Label(window, text="Available Feats").grid(row=0, column=0, sticky="we")
+            points = 6
             available_feats = tk.Listbox(window, height=10)
             available_feats.grid(row=1, column=0, sticky="w")
 
@@ -99,10 +100,10 @@ class NewCharacter(tk.Frame):
             resolveval.set(10 + stats["presenceval"].get() + stats["willval"].get())
             hpval.set(2 * (stats["fortitudeval"].get() + stats["presenceval"].get() + stats["willval"].get()) + 10)
 
-        mainframe = tk.Frame(self)
+        mainframe = tk.Frame(self, bg='white')
         mainframe.grid(row=0, column=0, sticky="nsew")
 
-        abilitiesframe = tk.Frame(mainframe)
+        abilitiesframe = tk.Frame(mainframe, bg='pink')
         abilitiesframe.grid(row=0, column=0, sticky="w")
 
         physicalframe = tk.Frame(abilitiesframe)
@@ -117,14 +118,17 @@ class NewCharacter(tk.Frame):
         extraordinaryframe = tk.Frame(abilitiesframe)
         extraordinaryframe.grid(row=14, column=0, sticky="w")
 
-        statframe = tk.Frame(mainframe)
+        statframe = tk.Frame(mainframe, bg='red')
         statframe.grid(row=0, column=2, padx=25, pady=15, sticky="ne")
 
-        fluffframe = tk.Frame(mainframe)
-        fluffframe.grid(row=0, column=3, sticky="nsew")
+        otherframe = tk.Frame(mainframe, bg='orange')
+        otherframe.grid(row=0, column=3, sticky="nswe")
 
-        featsframe = tk.Frame(fluffframe)
-        featsframe.grid(row=6, column=0, stick="nsew")
+        fluffframe = tk.Frame(otherframe, bg='blue')
+        fluffframe.grid(row=0, column=3)
+
+        featsframe = tk.Frame(otherframe)
+        featsframe.grid(row=1, column=3, stick="nsew")
 
         largefont = tkfont.Font(size=22)
 
@@ -173,6 +177,8 @@ class NewCharacter(tk.Frame):
                         
             for i in range(0, len(purchased_feats)):
                 purchased_feats_list.append(tk.Label(featsframe, text=purchased_feats[i]).grid(row=i + 1, column=1))
+                purchased_feats_list.append(
+                    tk.Label(featsframe, text=fts.feat_list[purchased_feats[i].lower()].cost).grid(row=i + 1, column=2))
         
         tk.Label(abilitiesframe, text="Points Remaining:").grid(row=0, column=0, sticky="w")
         tk.Label(abilitiesframe, textvariable=ability_points).grid(row=0, column=1, sticky="w")
@@ -257,5 +263,5 @@ class NewCharacter(tk.Frame):
     
 if __name__ == "__main__":
     app = Main()
-    app.title("Legenardy Characters")
+    app.title("Legendary Characters")
     app.mainloop()
